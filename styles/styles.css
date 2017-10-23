@@ -1,0 +1,131 @@
+html {
+  background-color: #fffaea;
+}
+
+body {
+  font-size: 100%;
+}
+
+h1 {
+  text-align: center;
+  color: teal;
+}
+
+h2, h3 {
+  font-size: 1.5em;
+  color: teal;
+}
+
+b {
+  color: teal;
+}
+
+ul {
+  list-style-type: none;
+  display: inline-block;
+}
+
+@media all and (max-width: 600px) {
+  ul {
+    margin: 0px;
+    padding: 0px;
+  }
+}
+
+ul li {
+  padding: 5px;
+}
+
+ul a {
+  text-decoration: none;
+  color: teal;
+}
+
+ul a:visited {
+  color: grey;
+}
+
+ul a:hover {
+  color: skyblue;
+}
+
+.container {
+  max-width: 50%;
+  float: right;
+  display: inline-block;
+}
+
+#logo {
+  width: 100%;
+  height: auto;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/*Navigation*/
+
+nav {
+margin-left: -17px;
+}
+
+nav ul {
+border-top: 1px solid silver;
+background-color: black;
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+position: fixed;
+bottom: 0;
+width: 100%;
+animation: ani1 3s linear 2s infinite alternate;
+}
+
+@keyframes ani1 {
+from {border-top: 1px solid silver;}
+to {border-top: 1px solid red;}
+}
+
+nav ul li {
+border-right: 1px solid silver;
+display: inline-block;
+padding: 0px;
+}
+
+nav ul li:last-child {
+border-right: none;
+float: right;
+}
+
+nav ul li a {
+text-decoration: none;
+font-size: 1.2em;
+transition: all .5s;
+color: white;
+padding: 5px;
+}
+
+nav ul li a:hover {
+  color: red;
+}
+
+@media all and (max-width: 600px) {
+nav ul li {
+  margin: 0;
+  padding: 2px;
+}
+nav ul li a {
+font-size: 1em;
+padding: 5px;
+}
+nav ul li:nth-child(4) {
+  display: none;
+}
+p {
+font-size: 1em;
+}
+}

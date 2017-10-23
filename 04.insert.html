@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Insert</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+  </head>
+  <body class="w3-container">
+
+    <h1>Insert</h1>
+
+    <h2>Inserting Into a Collection</h2>
+
+    <p>We can use the <b>insertOne()</b> method to insert a document into a collection.</p>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p><b>Documents</b> in MongoDB are similar to <b>records</b> in MySQL.</p>
+    </div>
+
+    <p>The <b>insertOne()</b> method will accept an object as it's first parameter. This object will hold the names and values of each field in the document we want to insert.</p>
+
+    <p>The second parameter is a callback function for handling errors and/or the result of the insertion:</p>
+
+    <pre><code class="language-javascript">
+      // app.js
+
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var myObj = {name: 'My Company', address: 'Boulder CO'};
+        db.collection('customers').insertOne(myObj, function(err, res) {
+          if(err) throw err;
+          console.log('Document Inserted!');
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: Document Inserted!
+    </code></pre>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>If you try to insert a document into a collection that doesn't exist, the collection will be automaticaly created.</p>
+    </div>
+
+    <h2>Inserting Multiple Documents</h2>
+
+    <p></p>
+
+
+
+
+
+
+
+
+    <!-- Back Button -->
+    <button class="w3-button w3-block w3-teal w3-large w3-margin-bottom w3-hover-gray w3-round" onclick="(function() {window.history.back()}())">Back</button>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>

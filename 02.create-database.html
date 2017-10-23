@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Create Database</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+  </head>
+  <body class="w3-container">
+
+    <h1>Create Database</h1>
+
+    <h2>Creating a Database</h2>
+
+    <p>To create a database, we will start by creating a MongoClient object. Then we will specify a connection URL with the correct IP address and the name of the database we want to create.</p>
+
+    <p>If the database doesn't exist, it will be created and a connection will be established:</p>
+
+    <pre><code class="language-javascript">
+      // app.js
+
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        console.log("Database created!");
+        db.close();
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: Database Created!
+    </code></pre>
+
+
+    <!-- Back Button -->
+    <button class="w3-button w3-block w3-teal w3-large w3-margin-bottom w3-hover-gray w3-round" onclick="(function() {window.history.back()}())">Back</button>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>

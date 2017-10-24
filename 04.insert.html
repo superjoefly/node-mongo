@@ -15,9 +15,9 @@
 
     <h1>Insert</h1>
 
-    <h2>Inserting Into a Collection</h2>
+    <h2>Inserting Documents</h2>
 
-    <p>We can use the <b>insertOne()</b> method to insert a document into a collection.</p>
+    <p>We can use the <b>insertOne()</b> method to insert a single document into a collection.</p>
 
     <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
       <p><b>Documents</b> in MongoDB are similar to <b>records</b> in MySQL.</p>
@@ -56,15 +56,110 @@
       <p>If you try to insert a document into a collection that doesn't exist, the collection will be automaticaly created.</p>
     </div>
 
+    <hr>
+
     <h2>Inserting Multiple Documents</h2>
 
-    <p></p>
+    <p>We can use the <b>insertMany()</b> method to insert multiple documents into a MongoDB collection.</p>
 
+    <p>The first parameter of the <b>insertMany()</b> method will hold an array of objects containing the data we wish to insert.</p>
 
+    <p>The second parameter will be a callback function for handling errors and/or the result of the insertion:</p>
 
+    <pre><code class="language-javascript">
+      // app.js
 
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
 
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var myObj = [
+          {name: 'Jason', address: '2322 Up St'},
+          {name: 'Brian', address: '1289 Down St'},
+          {name: 'Rebecca', address: '226 Left St'},
+          {name: 'T-Bone', address: '333 Right St'},
+          {name: 'Sasquach', address: '456 Middle St'}
+        ];
+        db.collection('customers').insertMany(myObj, function(err, res) {
+          if(err) throw err;
+          console.log(res.insertedCount + ' Documents Inserted!');
+          db.close();
+        });
+      });
+    </code></pre>
 
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: 5 Documents Inserted!
+    </code></pre>
+
+    <hr>
+
+    <h2>The Result Object</h2>
+
+    <p>The <b>insertMany()</b> method will return a <b>result object</b> which contains information about how the insertion affected the database.</p>
+
+    <p>In the example above, we access the <b>insertedCount</b> property of the result object which gives us the number of documents (records) that were inserted into the database.</p>
+
+    <pre><code class="language-javascript">
+      db.collection('customers').insertMany(myObj, function(err, res) {
+        if(err) throw err;
+        console.log(res.insertedCount + ' Documents Inserted!');
+        db.close();
+      });
+
+      // Result: 5 Documents Inserted!
+    </code></pre>
+
+    <hr>
+
+    <h2>The _id Field</h2>
+
+    <p>Unless we provide an _id for a document-insertion, MongoDB will automatically assign one for us.</p>
+
+    <p>If there are multiple documents inserted, MongoDB will provide an unique _id for each inserted document.</p>
+
+    <p>If we do specify an _id field for a document, it must be unique for each document.</p>
+
+    <p>In the following example, we insert 3 products into a new collection, 'products', with each inserted document having a unique _id field value. Then we console.log the entire response object:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var myObj = [
+          {_id: 1, name: 'Race Car'},
+          {_id: 2, name: 'Barby Doll'},
+          {_id: 3, name: 'He-Man'}
+        ];
+        db.collection('products').insertMany(myObj, function(err, res) {
+          if(err) throw err;
+          console.log(res);
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result:
+      { result: { ok: 1, n: 3 },
+        ops:
+         [ { _id: 1, name: 'Race Car' },
+           { _id: 2, name: 'Barby Doll' },
+           { _id: 3, name: 'He-Man' } ],
+        insertedCount: 3,
+        insertedIds: [ 1, 2, 3 ] }
+    </code></pre>
 
 
     <!-- Back Button -->

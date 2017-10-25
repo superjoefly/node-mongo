@@ -270,3 +270,82 @@
     // [ { _id: 59ee477f406931606fb2a004,
     //     name: 'My Company',
     //     address: 'Boulder CO' } ]
+
+
+
+////////////////////
+
+
+// Sort Method
+
+// Ascending Order {name: 1}
+
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var mysort = { name: 1 };
+//   db.collection('customers').find().sort(mysort).toArray(function(err, result) {
+//     if(err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });
+
+// Result:
+    // [ { _id: 59ee910440030506aa61d275,
+    //     name: 'Brian',
+    //     address: '1289 Down St' },
+    //   { _id: 59ee910440030506aa61d274,
+    //     name: 'Jason',
+    //     address: '2322 Up St' },
+    //   { _id: 59ee477f406931606fb2a004,
+    //     name: 'My Company',
+    //     address: 'Boulder CO' },
+    //   { _id: 59ee910440030506aa61d276,
+    //     name: 'Rebecca',
+    //     address: '226 Left St' },
+    //   { _id: 59ee910440030506aa61d278,
+    //     name: 'Sasquach',
+    //     address: '456 Middle St' },
+    //   { _id: 59ee910440030506aa61d277,
+    //     name: 'T-Bone',
+    //     address: '333 Right St' } ]
+
+
+// Descending Order {name: -1}
+
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var mysort = { name: -1 };
+//   db.collection('customers').find().sort(mysort).toArray(function(err, result) {
+//     if(err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });
+
+// Result:
+    // [ { _id: 59ee910440030506aa61d277,
+    //     name: 'T-Bone',
+    //     address: '333 Right St' },
+    //   { _id: 59ee910440030506aa61d278,
+    //     name: 'Sasquach',
+    //     address: '456 Middle St' },
+    //   { _id: 59ee910440030506aa61d276,
+    //     name: 'Rebecca',
+    //     address: '226 Left St' },
+    //   { _id: 59ee477f406931606fb2a004,
+    //     name: 'My Company',
+    //
+    //     address: 'Boulder CO' },
+    //   { _id: 59ee910440030506aa61d274,
+    //     name: 'Jason',
+    //     address: '2322 Up St' },
+    //   { _id: 59ee910440030506aa61d275,
+    //     name: 'Brian',
+    //     address: '1289 Down St' } ]

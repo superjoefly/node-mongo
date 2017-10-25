@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Drop</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+  </head>
+  <body class="w3-container">
+
+    <h1>Drop</h1>
+
+    <h2>Dropping Collections</h2>
+
+    <p>We can use the <b>drop()</b> method to drop collections in MongoDB.</p>
+
+    <p>The <b>drop()</b> method will take a callback function containing an <b>error</b> object, and also the <b>result</b> parameter which will return true if the collection was dropped successfully, or false if the drop was not successful.</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').drop(function(err, delOK) {
+          if(err) throw err;
+          if(delOK) console.log('Collection Dropped Successfully!');
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: Collection Dropped Successfully!
+    </code></pre>
+
+    <hr>
+
+    <h2>db.dropCollection</h2>
+
+    <p>We can also use the <b>db.dropCollection()</b> method to delete collections.</p>
+
+    <p>This method takes two parameters: the <b>name</b> of the collection and a callback function:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        db.dropCollection("customers", function(err, delOK) {
+          if (err) throw err;
+          if (delOK) console.log("Collection Dropped Successfully!");
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: Collection Dropped Successfully!
+    </code></pre>
+
+
+
+    <!-- Back Button -->
+    <button class="w3-button w3-block w3-teal w3-large w3-margin-bottom w3-hover-gray w3-round" onclick="(function() {window.history.back()}())">Back</button>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>

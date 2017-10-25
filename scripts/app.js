@@ -372,19 +372,40 @@
 //
 // // Result: Document Deleted!
 
-// deleteMany() Method
+
+
+
+// // deleteMany() Method
+//
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = { address: /^2/ };
+//   db.collection('customers').deleteMany(query, function(err, obj) {
+//     if(err) throw err;
+//     console.log(obj.result.n + ' Document(s) Deleted!');
+//     db.close();
+//   });
+// });
+//
+// // Result: 2 Document(s) Deleted!
+
+
+
+// Drop Collections
 
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017/mydb';
 
 MongoClient.connect(url, function(err, db) {
   if(err) throw err;
-  var query = { address: /^2/ };
-  db.collection('customers').deleteMany(query, function(err, obj) {
+  db.collection('customers').drop(function(err, delOK) {
     if(err) throw err;
-    console.log(obj.result.n + ' Document(s) Deleted!');
+    if(delOK) console.log('Collection Dropped Successfully!');
     db.close();
   });
 });
 
-// Result: 2 Document(s) Deleted!
+// Result: Connection Dropped Successfully!

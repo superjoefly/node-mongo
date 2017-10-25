@@ -341,7 +341,6 @@
     //     address: '226 Left St' },
     //   { _id: 59ee477f406931606fb2a004,
     //     name: 'My Company',
-    //
     //     address: 'Boulder CO' },
     //   { _id: 59ee910440030506aa61d274,
     //     name: 'Jason',
@@ -394,18 +393,88 @@
 
 
 
-// Drop Collections
+// // Drop Collections
+//
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   db.collection('customers').drop(function(err, delOK) {
+//     if(err) throw err;
+//     if(delOK) console.log('Collection Dropped Successfully!');
+//     db.close();
+//   });
+// });
+//
+// // Result: Connection Dropped Successfully!
+
+
+
+/////////////////////
+
+// Updating Documents
+
+// // Update a Single Document in Collection
+//
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = { address: '1289 Down St' };
+//   var newValues = { name: 'Brian', address: '1387 Up St' };
+//   db.collection('customers').updateOne(query, newValues, function(err, res) {
+//     if(err) throw err;
+//     console.log('Document Updated Successfully!');
+//     db.close();
+//   });
+// });
+//
+// // Result: Document Updated Successfully!
+
+
+// // Update ONLY Specific Fields ($set)
+//
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = { address: '1289 Down St' };
+//
+//   var newValues = {$set:
+//     { address: '1387 Up St' }
+//   };
+//
+//   db.collection('customers').updateOne(query, newValues, function(err, res) {
+//     if(err) throw err;
+//     console.log('Document Updated Successfully!');
+//     db.close();
+//   });
+// });
+//
+// // Result: Document Updated Successfully!
+
+
+// Update Many Documents
 
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017/mydb';
 
 MongoClient.connect(url, function(err, db) {
   if(err) throw err;
-  db.collection('customers').drop(function(err, delOK) {
+  var query = { name: /^J/ };
+
+  var newValues = {$set:
+    { name: 'Jerry' }
+  };
+
+  db.collection('customers').updateMany(query, newValues, function(err, obj) {
     if(err) throw err;
-    if(delOK) console.log('Collection Dropped Successfully!');
+    console.log(obj.result.nModified + ' Document(s) Updated!');
     db.close();
   });
 });
 
-// Result: Connection Dropped Successfully!
+// Result: 1 Document(s) Updated!

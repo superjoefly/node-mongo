@@ -91,13 +91,18 @@
 
     <p>One property of this object is the <b>result</b> property which describes if the execution was successful, and how many documents were affected.</p>
 
+    <pre><code class="language-javascript">
+      // Result Property
+      { n: 1, ok: 1 }
+    </code></pre>
+
     <p>We can use this object to return the number of deleted documents using the following:</p>
 
     <pre><code class="language-javascript">
       console.log(obj.result.n + ' Document(s) Deleted!');
     </code></pre>
 
-    <p>In the example above, the result will be:</p>
+    <p>In the example above, two documents were deleted:</p>
 
     <pre><code class="language-javascript">
       // Result: 2 Document(s) Deleted!

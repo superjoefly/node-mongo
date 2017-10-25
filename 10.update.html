@@ -15,13 +15,139 @@
 
     <h1>MongoDB Update</h1>
 
-    <h2></h2>
+    <h2>Updating Documents</h2>
 
-    <p></p>
+    <p>We can use the <b>updateOne()</b> method to update a single document in MongoDB.</p>
+
+    <p>The first parameter of the <b>updateOne()</b> method will hold a query object defining the document to update.</p>
+
+    <pre><code class="language-javascript">
+      <p>If the query finds more than one matching document, only the first one will be updated.</p>
+    </code></pre>
+
+    <p>The second parameter of the <b>updateOne()</b> method holds an object defining the NEW values of the document.</p>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>By default, every field in the document will be updated except the _id field. Be sure to set the value of all fields, otherwise they will be left empty!</p>
+
+      <p>This can be prevented by using the <b>$set</b> operator which is convered in the next section.</p>
+    </div>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var query = { address: '1289 Down St' };
+        var newValues = { name: 'Brian', address: '1387 Up St' };
+        db.collection('customers').updateOne(query, newValues, function(err, res) {
+          if(err) throw err;
+          console.log('Document Updated Successfully!');
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: Document Updated Successfully!
+    </code></pre>
 
 
+    <hr>
 
+    <h2>Updating Specific Fields</h2>
 
+    <p>We can use the <b>$set</b> operator to prevent other fields from being left empty:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var query = { address: '1289 Down St' };
+
+        var newValues = {$set:
+          { address: '1387 Up St' }
+        };
+
+        db.collection('customers').updateOne(query, newValues, function(err, res) {
+          if(err) throw err;
+          console.log('Document Updated Successfully!');
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: Document Updated Successfully!
+    </code></pre>
+
+    <hr>
+
+    <h2>Updating Many Documents</h2>
+
+    <p>We can use the <b>updateMany()</b> method to update ALL documents that match the specified query.</p>
+
+    <p>In the following example, we updated all names that start with the letter 'J' to the name 'Jerry':</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var query = { name: /^J/ };
+
+        var newValues = {$set:
+          { name: 'Jerry' }
+        };
+
+        db.collection('customers').updateMany(query, newValues, function(err, obj) {
+          if(err) throw err;
+          console.log(obj.result.nModified + ' Document(s) Updated!');
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: 1 Document(s) Updated!
+    </code></pre>
+
+    <hr>
+
+    <h2>Result Object</h2>
+
+    <p>Both the <b>updateOne()</b> and <b>updateMany()</b> methods return an object with information about how the database was affected.</p>
+
+    <p>One property of this object is the <b>result</b> property which tells us if the execution completed successfully, and also how many documents were affected.</p>
+
+    <pre><code class="language-javascript">
+      // Result Property
+      { n: 1, nModified: 1, ok: 1 }
+    </code></pre>
+
+    <p>In the above example, only one document was affected:</p>
+
+    <pre><code class="language-javascript">
+      console.log(obj.result.nModified + ' Document(s) Updated!');
+
+      // Result: 1 Document(s) Updated!
+    </code></pre>
 
 
 

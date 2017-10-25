@@ -349,3 +349,42 @@
     //   { _id: 59ee910440030506aa61d275,
     //     name: 'Brian',
     //     address: '1289 Down St' } ]
+
+
+
+/////////////////////
+
+// Deleting Documents
+
+// // deleteOne() Method
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb://localhost:27017/mydb";
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = { address: '1289 Down St' };
+//   db.collection('customers').deleteOne(query, function(err, obj) {
+//     if (err) throw err;
+//     console.log('Document Deleted!');
+//     db.close();
+//   });
+// });
+//
+// // Result: Document Deleted!
+
+// deleteMany() Method
+
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017/mydb';
+
+MongoClient.connect(url, function(err, db) {
+  if(err) throw err;
+  var query = { address: /^2/ };
+  db.collection('customers').deleteMany(query, function(err, obj) {
+    if(err) throw err;
+    console.log(obj.result.n + ' Document(s) Deleted!');
+    db.close();
+  });
+});
+
+// Result: 2 Document(s) Deleted!

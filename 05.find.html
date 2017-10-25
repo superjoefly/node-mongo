@@ -21,12 +21,172 @@
 
     <h2>Find One</h2>
 
-    <p></p>
+    <p>We can use the <b>findOne()</b> method to select data from a table and return a SINGLE occurence from a collection.</p>
 
+    <p>The first parameter of the <b>findOne()</b> method will hold a query object. In the following example, we will use an empty query object that will select ALL documents in a collection, but only returns the first one:</p>
 
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
 
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').findOne({}, function(err, result) {
+          if(err) throw err;
+          console.log(result.name);
+          db.close();
+        });
+      });
+    </code></pre>
 
+    <p>Run the app.js file containing the code above using the following:</p>
 
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result: My Company
+    </code></pre>
+
+    <hr>
+
+    <h2>Find All</h2>
+
+    <p>We can use the <b>find()</b> method to select data from a table and return ALL occurences in the collection:</p>
+
+    <p>The first parameter of the <b>find()</b> method is a query object. Using an empty query object will select ALL documents in the collection.</p>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>Using no parameters in the find() method is similar to using <b>SELECT *</b> in MySQL.</p>
+    </div>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').find({}).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result);
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result:
+          // [ { _id: 59ee477f406931606fb2a004,
+          // name: 'My Company',
+          // address: 'Boulder CO' },
+          // { _id: 59ee910440030506aa61d274,
+          // name: 'Jason',
+          // address: '2322 Up St' },
+          // { _id: 59ee910440030506aa61d275,
+          // name: 'Brian',
+          // address: '1289 Down St' },
+          // { _id: 59ee910440030506aa61d276,
+          // name: 'Rebecca',
+          // address: '226 Left St' },
+          // { _id: 59ee910440030506aa61d277,
+          //
+          // name: 'T-Bone',
+          // address: '333 Right St' },
+          // { _id: 59ee910440030506aa61d278,
+          // name: 'Sasquach',
+          // address: '456 Middle St' } ]
+    </code></pre>
+
+    <hr>
+
+    <h2>Find Some</h2>
+
+    <p>The second parameter of the <b>find()</b> method holds an object describing which fields to include in the result object.</p>
+
+    <p>This parameter is optional and, if omitted, will return all fields in the collection:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').find({}, {
+          _id: false, name: true, address: true
+        }).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result);
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result:
+          // [ { name: 'My Company', address: 'Boulder CO' },
+          // { name: 'Jason', address: '2322 Up St' },
+          // { name: 'Brian', address: '1289 Down St' },
+          // { name: 'Rebecca', address: '226 Left St' },
+          // { name: 'T-Bone', address: '333 Right St' },
+          // { name: 'Sasquach', address: '456 Middle St' } ]
+    </code></pre>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>By default, ALL fields are included in the result object. We only need to specify which fields should not be included by setting the field to <b>false</b>.</p>
+    </div>
+
+    <hr>
+
+    <h2>Result Object</h2>
+
+    <p>In the examples above, we convert the result object into an array of objects using JavaScript's <b>toArray()</b> method. Therefore, we can access a specific document in the collection by referring to the array object's property:</p>
+
+    <p>Access Address Property of Third Object:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').find({}, {
+          _id: false, name: true, address: true
+        }).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result[3].address);
+          db.close();
+        });
+      });
+
+      // Result: 226 Left St
+    </code></pre>
+
+    <p>Access Name Property of Second Object:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').find({}, {
+          _id: false, name: true, address: true
+        }).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result[2].name);
+          db.close();
+        });
+      });
+
+      // Result: Brian
+    </code></pre>
 
 
 

@@ -222,3 +222,51 @@
 // });
 
 // Result: Brian
+
+
+
+///////////////////
+
+
+// Query Objects
+
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = {address: '226 Left St'};
+//   db.collection('customers').find(query).toArray(function(err, result) {
+//     if(err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });
+
+// Result:
+    // [ { _id: 59ee910440030506aa61d276,
+    // name: 'Rebecca',
+    // address: '226 Left St' } ]
+
+
+
+// Using Regular Expression as Query
+
+// // Retrieve all Addresses that start with letter B
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = { address: /^B/ };
+//   db.collection('customers').find(query).toArray(function(err, result) {
+//     if(err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });
+
+// Result
+    // [ { _id: 59ee477f406931606fb2a004,
+    //     name: 'My Company',
+    //     address: 'Boulder CO' } ]

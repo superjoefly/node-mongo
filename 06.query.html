@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Query</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+  </head>
+  <body class="w3-container">
+
+    <h1>Wuery Objects</h1>
+
+    <h2>Filtering Results</h2>
+
+    <p>We can use a <b>query</b> object to filter results when retrieving documents from a collection.</p>
+
+    <p>The first argument of the <b>find()</b> method is a query object, and can be used to limit our search:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var query = {address: '226 Left St'};
+        db.collection('customers').find(query).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result);
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result:
+          // [ { _id: 59ee910440030506aa61d276,
+          // name: 'Rebecca',
+          // address: '226 Left St' } ]
+    </code></pre>
+
+    <hr>
+
+    <h2>Filter Using Regular Expression</h2>
+
+    <p>We can also write regular expressions to find exactly what we are looking for.</p>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>Regular expressions are limited to querying strings.</p>
+    </div>
+
+    <p>Retrieve all documents where the <b>address</b> field starts with the letter <b>B</b>:</p>
+
+    <pre><code class="language-javascript">
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var query = { address: /^B/ };
+        db.collection('customers').find(query).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result);
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result
+          // [ { _id: 59ee477f406931606fb2a004,
+          //     name: 'My Company',
+          //     address: 'Boulder CO' } ]
+    </code></pre>
+
+
+
+    <!-- Back Button -->
+    <button class="w3-button w3-block w3-teal w3-large w3-margin-bottom w3-hover-gray w3-round" onclick="(function() {window.history.back()}())">Back</button>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>

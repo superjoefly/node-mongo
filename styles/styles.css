@@ -39,12 +39,12 @@ ul li {
 }
 
 @media all and (min-width: 1300px) {
-  ul {
+  ul.links {
     margin-top: 200px;
   }
-  ul li:not(.nav) {
+  ul.links li {
     display: inline;
-    margin-left: 25px;
+    margin: 0 10px 0 10px;
   }
 }
 

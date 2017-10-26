@@ -457,24 +457,112 @@
 // // Result: Document Updated Successfully!
 
 
-// Update Many Documents
+// // Update Many Documents
+//
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var query = { name: /^J/ };
+//
+//   var newValues = {$set:
+//     { name: 'Jerry' }
+//   };
+//
+//   db.collection('customers').updateMany(query, newValues, function(err, obj) {
+//     if(err) throw err;
+//     console.log(obj.result.nModified + ' Document(s) Updated!');
+//     db.close();
+//   });
+// });
+//
+// // Result: 1 Document(s) Updated!
 
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/mydb';
 
-MongoClient.connect(url, function(err, db) {
-  if(err) throw err;
-  var query = { name: /^J/ };
 
-  var newValues = {$set:
-    { name: 'Jerry' }
-  };
+///////////////
 
-  db.collection('customers').updateMany(query, newValues, function(err, obj) {
-    if(err) throw err;
-    console.log(obj.result.nModified + ' Document(s) Updated!');
-    db.close();
-  });
-});
 
-// Result: 1 Document(s) Updated!
+
+// The limit() Method
+
+// Limiting Number of Results
+
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost:27017/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   db.collection('customers').find().limit(3).toArray(function(err, result) {
+//     if(err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });
+//
+// // Result:
+//     // [ { _id: 59f0eeab9afe516528926fb3,
+//     // name: 'Jerry',
+//     // address: '2322 Up St' },
+//     // { _id: 59f0eeab9afe516528926fb4,
+//     // name: 'Brian',
+//     // address: '1387 Up St' },
+//     // { _id: 59f0eeab9afe516528926fb5,
+//     // name: 'Rebecca',
+//     // address: '226 Left St' } ]
+
+
+//////////////
+
+
+// Joining Databases with $lookup Stage
+
+// Note: we already have a products collection that was created in the 'Insert Section'
+
+// // Create collection for 'orders'
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb://localhost:27017/mydb";
+//
+// // Orders Creation and Insertion
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   var myObj = [
+//     {_id: 1, product_id: 123, status: 3}
+//   ];
+//   db.collection('orders').insertMany(myObj, function(err, res) {
+//     if(err) throw err;
+//     console.log('Orders Collection Created and Data Inserted!');
+//     db.close();
+//   });
+// });
+
+// Result: Orders Collection Created and Data Inserted!
+
+
+// // Join 'order' with product_id: 2 TO 'product' with _id: 2
+//
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://localhost/mydb';
+//
+// MongoClient.connect(url, function(err, db) {
+//   if(err) throw err;
+//   db.collection('orders').aggregate([
+//     { $lookup:
+//       {
+//         from: 'products',
+//         localField: 'product_id',
+//         foreignField: '_id',
+//         as: 'order_details'
+//       }
+//     }
+//   ], function(err, res) {
+//     if(err) throw err;
+//     console.log(JSON.stringify(res));
+//     db.close();
+//   });
+// });
+//
+// // Result:
+//   // [{"_id":1,"product_id":2,"status":3,"order_details":[{"_id":2,"name":"Ba
+//   // rby Doll"}]}]

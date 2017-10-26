@@ -24,13 +24,35 @@
     <p>In the following example, we will limit the number of documents returned to 3:</p>
 
     <pre><code class="language-javascript">
-      
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost:27017/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('customers').find().limit(3).toArray(function(err, result) {
+          if(err) throw err;
+          console.log(result);
+          db.close();
+        });
+      });
     </code></pre>
 
+    <p>Run the app.js file containing the code above using the following:</p>
 
+    <pre><code class="language-javascript">
+      node app.js
 
-
-
+      // Result:
+         [ { _id: 59f0eeab9afe516528926fb3,
+         name: 'Jerry',
+         address: '2322 Up St' },
+         { _id: 59f0eeab9afe516528926fb4,
+         name: 'Brian',
+         address: '1387 Up St' },
+         { _id: 59f0eeab9afe516528926fb5,
+         name: 'Rebecca',
+         address: '226 Left St' } ]
+    </code></pre>
 
 
 

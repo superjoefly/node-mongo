@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>MongoDB Join</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+  </head>
+  <body class="w3-container">
+
+    <h1>MongoDB Join</h1>
+
+    <h2>Joining Collections</h2>
+
+    <p>The <b>$lookup</b> stage allows us to perform a left-outer join in MongoDB.</p>
+
+    <p>The <b>$lookup</b> stage enables us to specify which collection to join with the current collection, and which fields should match.</p>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>Note: we already have a 'products' collection that was created in the 'Insert' Section of this guide.</p>
+    </div>
+
+    <p>First we will create a new collection for 'orders':</p>
+
+    <pre><code class="language-javascript">
+      // Create a collection for 'orders'
+
+      var MongoClient = require('mongodb').MongoClient;
+      var url = "mongodb://localhost:27017/mydb";
+
+      // Orders Creation and Insertion
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var myObj = [
+          {_id: 1, product_id: 2, status: 3}
+        ];
+        db.collection('orders').insertMany(myObj, function(err, res) {
+          if(err) throw err;
+          console.log('Orders Collection Created and Data Inserted!');
+          db.close();
+        });
+      });
+
+      // Result: Orders Collection Created and Data Inserted!
+    </code></pre>
+
+    <p>Next, we will join the matching "products" document(s) with the "orders" collection:</p>
+
+    <pre><code class="language-javascript">
+      // Join 'order' with product_id: 2 TO 'product' with _id: 2
+
+      var MongoClient = require('mongodb').MongoClient;
+      var url = 'mongodb://localhost/mydb';
+
+      MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        db.collection('orders').aggregate([
+          { $lookup:
+            {
+              from: 'products',
+              localField: 'product_id',
+              foreignField: '_id',
+              as: 'order_details'
+            }
+          }
+        ], function(err, res) {
+          if(err) throw err;
+          console.log(JSON.stringify(res));
+          db.close();
+        });
+      });
+    </code></pre>
+
+    <p>Run the app.js file containing the code above using the following:</p>
+
+    <pre><code class="language-javascript">
+      node app.js
+
+      // Result:
+        [{"_id":1,"product_id":2,"status":3,"order_details":[{"_id":2,"name":"Ba
+        rby Doll"}]}]
+    </code></pre>
+
+    <div class="w3-panel w3-border-blue w3-leftbar w3-pale-blue">
+      <p>The matching document from the <b>products</b> collection is now included in the <b>orders</b> collection as an array.</p>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- Back Button -->
+    <button class="w3-button w3-block w3-teal w3-large w3-margin-bottom w3-hover-gray w3-round" onclick="(function() {window.history.back()}())">Back</button>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>
